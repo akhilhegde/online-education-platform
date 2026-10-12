@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}{{ course['title'] }} – LearnHub{% endblock %}
+
+{% block content %}
+<nav class="breadcrumb">
+    <a href="{{ url_for('home') }}">Courses</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>{{ course['title'] }}</span>
+</nav>
+
+<article class="course-detail">
+    <header class="course-detail-header">
+        <h1>{{ course['title'] }}</h1>
+        <div class="course-detail-meta">
+            <span class="badge badge-{{ course['level']|lower }}">{{ course['level'] }}</span>
+            <span class="meta-sep">&middot;</span>
+            <span class="meta-text">{{ course['duration'] }}</span>
+            <span class="meta-sep">&middot;</span>
+            <span class="meta-text">{{ course['instructor'] }}</span>
+        </div>
+    </header>
+
+    <section class="course-detail-body">
+        <h2>About This Course</h2>
+        <p>{{ course['long_description'] }}</p>
+
+        {% if course['prerequisites'] %}
+        <h2>Prerequisites</h2>
+        <p>{{ course['prerequisites'] }}</p>
+        {% endif %}
+    </section>
+
+    <div class="course-detail-actions">
+        <a href="{{ url_for('enroll', course_id=course['id']) }}" class="btn btn-primary">Enroll in This Course</a>
+        <a href="{{ url_for('home') }}" class="btn btn-outline">Back to Catalogue</a>
+    </div>
+</article>
+{% endblock %}

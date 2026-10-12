@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}My Enrollments – LearnHub{% endblock %}
+
+{% block content %}
+<section class="form-page">
+    <h1>My Enrollments</h1>
+    <p class="form-intro">Enter your email address to view courses you have enrolled in.</p>
+
+    <form method="GET" class="lookup-form">
+        <div class="form-group form-inline">
+            <label for="email" class="sr-only">Email Address</label>
+            <input type="email" id="email" name="email" value="{{ email }}" placeholder="Your email address" required>
+            <button type="submit" class="btn btn-primary">Look Up</button>
+        </div>
+    </form>
+</section>
+
+{% if email %}
+<section class="enrollments-section">
+    {% if enrollments %}
+    <h2>Enrollments for {{ email }}</h2>
+    <div class="table-wrap">
+        <table class="enrollments-table">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Student Name</th>
+                    <th>Level</th>
+                    <th>Instructor</th>
+                    <th>Enrolled On</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for e in enrollments %}
+                <tr>
+                    <td>{{ e['course_title'] }}</td>
+                    <td>{{ e['student_name'] }}</td>
+                    <td><span class="badge badge-{{ e['level']|lower }}">{{ e['level'] }}</span></td>
+                    <td>{{ e['instructor'] }}</td>
+                    <td>{{ e['enrolled_at'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <h2>No enrollments found</h2>
+        <p>We couldn't find any enrollments for <strong>{{ email }}</strong>. You can browse the
+            <a href="{{ url_for('home') }}">course catalogue</a> and enroll in a course to get started.</p>
+    </div>
+    {% endif %}
+</section>
+{% endif %}
+{% endblock %}

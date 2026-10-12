@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Enroll – {{ course['title'] }} – LearnHub{% endblock %}
+
+{% block content %}
+<nav class="breadcrumb">
+    <a href="{{ url_for('home') }}">Courses</a>
+    <span class="breadcrumb-sep">/</span>
+    <a href="{{ url_for('course_detail', course_id=course['id']) }}">{{ course['title'] }}</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>Enroll</span>
+</nav>
+
+<section class="form-page">
+    <h1>Enroll in {{ course['title'] }}</h1>
+    <p class="form-intro">Fill in your details below to enroll. You can view your enrollments afterwards on the
+        <a href="{{ url_for('my_enrollments') }}">My Enrollments</a> page using your email address.</p>
+
+    <form method="POST" class="enroll-form" novalidate>
+        <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" value="{{ name }}" required placeholder="e.g. Akhil Sharma">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" value="{{ email }}" required placeholder="e.g. akhil@example.com">
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Submit Enrollment</button>
+            <a href="{{ url_for('course_detail', course_id=course['id']) }}" class="btn btn-outline">Cancel</a>
+        </div>
+    </form>
+</section>
+{% endblock %}
